@@ -12,7 +12,7 @@ def scrape_info():
     # Visit Mars News Site page
     page_url = "https://redplanetscience.com/"
     browser.visit(page_url)
-    time.sleep(1)
+    time.sleep(10)
 
     # Create HTML object and parse with BeautifulSoup.
     html = browser.html
@@ -26,7 +26,7 @@ def scrape_info():
     # Visit JPL Mars Space Images page
     page_url = "https://spaceimages-mars.com/"
     browser.visit(page_url)
-    time.sleep(1)
+    time.sleep(10)
 
     # Create HTML object and parse with BeautifulSoup.
     html = browser.html
@@ -51,7 +51,7 @@ def scrape_info():
     # Visit Mars Hemisphere page
     page_url = "https://marshemispheres.com/"
     browser.visit(page_url)
-    time.sleep(1)
+    time.sleep(10)
 
     # Create HTML object and parse with BeautifulSoup.
     html = browser.html
@@ -64,15 +64,20 @@ def scrape_info():
     # Loop to pull title and urls each image
     for i in hem_divs:
         
-        title = i.find('h3').text
-        img_href = i.find('a', class_='itemLink product-item')['href']
+        title = i.find("h3").text
+        img_href = i.find("a", class_="itemLink product-item")['href']
         browser.visit(page_url + img_href)
         mars_html = browser.html
-        soup_par = bs(mars_html, 'html.parser')
-        image_url = page_url + soup_par.find('img', class_='wide-image')['src']
-        hemisphere_image_url.append({"title": title, "img_url": image_url})
-        
-    hemisphere_image_url
+        soup_par = bs(mars_html, "html.parser")
+        img_url = page_url + soup_par.find("img", class_="wide-image")['src']
+        hemisphere_image_url.append({"title": title, "img_url": img_url})
+
+    mars_dict = {
+        "news_title": news_title, 
+        "news_p": news_p,
+        "featured_image_url": featured_image_url,
+        "fact_table": table,
+        "hemisphere_image_url": hemisphere_image_url}
 
     browser.quit()
 
